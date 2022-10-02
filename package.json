@@ -1,26 +1,44 @@
 {
-  "name": "audio-visualizer",
+  "name": "vue-audio-player",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
+  "author": {
+    "name": "Fahad @dapotatoman",
+    "email": "dev.iamfahad@gmail.com"
+  },
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/app.umd.cjs",
+  "module": "./dist/app.js",
+  "types": "./dist/app/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/app.js",
+      "require": "./dist/app.umd.cjs"
+    },
+
+    "./style": "./dist/style.css"
+  },
   "scripts": {
     "dev": "vite --host",
     "build": "vue-tsc --noEmit && vite build",
-    "preview": "vite preview"
+    "prepare": "npm run build"
   },
   "dependencies": {
-    "@soundcut/decode-audio-data-fast": "^2.0.1",
     "mp3-parser": "^0.3.0",
-    "vue": "^3.2.37",
-    "webaudio-peaks": "^1.0.0"
+    "vue": "^3.2.37"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.27.0",
     "@antfu/utils": "^0.5.2",
+    "@types/node": "^18.7.23",
     "@vitejs/plugin-vue": "^3.1.0",
     "eslint": "^8.24.0",
     "typescript": "^4.6.4",
     "vite": "^3.1.0",
+    "vite-plugin-dts": "^1.6.4",
     "vite-plugin-windicss": "^1.8.8",
     "vue-tsc": "^0.40.4",
     "windicss": "^3.5.6"
