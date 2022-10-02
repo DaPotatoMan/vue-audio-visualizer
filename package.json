@@ -1,0 +1,28 @@
+{
+  "name": "audio-visualizer",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@soundcut/decode-audio-data-fast": "^2.0.1",
+    "mp3-parser": "^0.3.0",
+    "vue": "^3.2.37",
+    "webaudio-peaks": "^1.0.0"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^0.27.0",
+    "@antfu/utils": "^0.5.2",
+    "@vitejs/plugin-vue": "^3.1.0",
+    "eslint": "^8.24.0",
+    "typescript": "^4.6.4",
+    "vite": "^3.1.0",
+    "vite-plugin-windicss": "^1.8.8",
+    "vue-tsc": "^0.40.4",
+    "windicss": "^3.5.6"
+  }
+}
