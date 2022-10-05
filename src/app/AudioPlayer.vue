@@ -46,7 +46,10 @@ import { drawCurve } from './utils/canvas'
 import { useSeekbar } from './utils/seekbar'
 import { getAudioData } from './utils/waveform'
 
-const { audio } = defineProps<{ audio: HTMLAudioElement }>()
+const props = defineProps<{
+  /** `id` of the audio element */
+  id: string
+}>()
 
 const wrapperRef = $ref<HTMLElement>()
 const svgRef = $ref<SVGElement>()
@@ -54,6 +57,11 @@ const seekbarRef = $ref<HTMLElement>()
 const progress = shallowRef(0)
 
 async function init() {
+  const audio = document.getElementById(props.id) as HTMLAudioElement
+
+  if (!audio)
+    return console.error('Audio element was not found')
+
   const getData = await getAudioData(audio.src)
   const seekbar = useSeekbar(seekbarRef, audio, progress)
   const pathNodes = Array.from(svgRef.querySelectorAll<SVGPathElement>('.path'))
