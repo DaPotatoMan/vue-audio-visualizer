@@ -23,6 +23,7 @@
   "scripts": {
     "dev": "vite --host",
     "build": "vue-tsc --noEmit && vite build",
+    "build:watch": "vite build -w",
     "prepare": "npm run build",
     "release": "bumpp --commit --push --tag"
   },
