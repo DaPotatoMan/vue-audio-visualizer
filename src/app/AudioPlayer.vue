@@ -49,6 +49,9 @@ import { getAudioData } from './utils/waveform'
 const props = defineProps<{
   /** `id` of the audio element */
   id: string
+
+  /** Peaks data of audio file */
+  data?: number[]
 }>()
 
 const wrapperRef = $ref<HTMLElement>()
@@ -62,7 +65,7 @@ async function init() {
   if (!audio)
     return console.error('Audio element was not found')
 
-  const getData = await getAudioData(audio.src)
+  const getData = await getAudioData(audio.src, props.data)
   const seekbar = useSeekbar(seekbarRef, audio, progress)
   const pathNodes = Array.from(svgRef.querySelectorAll<SVGPathElement>('.path'))
 
@@ -70,6 +73,8 @@ async function init() {
     const width = wrapperRef.clientWidth
     const bars = Math.round(width / 10) - 2
     const data = getData(bars)
+
+    if (!data.length) return console.warn('Dataset is empty')
 
     svgRef.setAttribute('viewBox', `0 0 ${width} 110`)
     seekbar.resize()

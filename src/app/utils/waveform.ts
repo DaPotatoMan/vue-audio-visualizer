@@ -1,4 +1,7 @@
-import { getAudioBuffer } from './decoder'
+function shrinkArray(target: number[], size: number) {
+  const step = target.length / size
+  return target.filter((v, i) => Math.floor(i % step) === 0)
+}
 
 function filterData(audioBuffer: AudioBuffer, totalBars: number) {
   const rawData = audioBuffer.getChannelData(0) // We only need to work with one channel of data
@@ -20,10 +23,14 @@ function filterData(audioBuffer: AudioBuffer, totalBars: number) {
   return filteredData.map(n => n * multiplier)
 }
 
-export async function getAudioData(src: string) {
+export async function getAudioData(src: string, data?: number[]) {
+  if (data) return (bars = 100) => shrinkArray(data, bars)
+
+  const { getAudioBuffer } = await import('./decoder')
+
   const ctx = new AudioContext({ sampleRate: 44100 })
   const buffer = await fetch(src).then(i => i.arrayBuffer())
-  const audioBuffer = await getAudioBuffer(buffer, ctx)
+  const audioBuffer = await getAudioBuffer(buffer, ctx) as AudioBuffer
 
   return (bars = 100) => filterData(audioBuffer, bars)
 }
