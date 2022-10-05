@@ -28,9 +28,14 @@ export async function getAudioData(src: string, data?: number[]) {
 
   const { getAudioBuffer } = await import('./decoder')
 
-  const ctx = new AudioContext({ sampleRate: 44100 })
-  const buffer = await fetch(src).then(i => i.arrayBuffer())
-  const audioBuffer = await getAudioBuffer(buffer, ctx) as AudioBuffer
+  let ctx = new AudioContext({ sampleRate: 44100 })
+  let buffer = await fetch(src).then(i => i.arrayBuffer())
+  let audioBuffer = await getAudioBuffer(buffer, ctx) as AudioBuffer
 
-  return (bars = 100) => filterData(audioBuffer, bars)
+  const peaks = filterData(audioBuffer, 100)
+
+  // Cleanup
+  ctx = buffer = audioBuffer = null as any
+
+  return (bars = 100) => shrinkArray(peaks, bars)
 }
