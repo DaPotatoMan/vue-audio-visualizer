@@ -6,6 +6,7 @@
 
     "vue/component-tags-order": "off",
 
-    "eslint-comments/no-unlimited-disable": "off"
+    "eslint-comments/no-unlimited-disable": "off",
+    "antfu/if-newline": "off"
   }
 }

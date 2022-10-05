@@ -31,6 +31,8 @@ export function useSeekbar(target: HTMLElement, audio: HTMLAudioElement, progres
   }
 
   function dragEnd() {
+    if (!active) return
+
     updateTime(initialX = currentX)
     active = false
   }
@@ -72,13 +74,12 @@ export function useSeekbar(target: HTMLElement, audio: HTMLAudioElement, progres
   window.addEventListener('touchmove', drag, false)
 
   target.addEventListener('mousedown', dragStart, { passive: true })
-  target.addEventListener('mouseup', dragEnd, { passive: true })
+  window.addEventListener('mouseup', dragEnd, { passive: true })
   window.addEventListener('mousemove', drag, false)
 
   // Audio events
   audio.addEventListener('timeupdate', () => {
-    if (active)
-      return
+    if (active) return
 
     const time = (audio.currentTime / audio.duration)
     const x = xOffset = currentX = parentWidth * time
