@@ -10,21 +10,11 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/app.umd.cjs",
-  "module": "./dist/app.js",
-  "types": "./dist/app/index.d.ts",
-  "exports": {
-    ".": {
-      "import": "./dist/app.js",
-      "require": "./dist/app.umd.cjs"
-    },
-    "./style": "./dist/style.css"
-  },
+  "main": "./src/app/index.ts",
   "scripts": {
     "dev": "vite --host",
     "build": "vue-tsc --noEmit && vite build",
     "build:watch": "vite build -w",
-    "prepare": "npm run build",
     "release": "bumpp --commit --push --tag"
   },
   "dependencies": {
