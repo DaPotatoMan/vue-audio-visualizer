@@ -72,23 +72,23 @@ async function init() {
   const update = debounce(200, false, () => {
     const width = wrapperRef.clientWidth
     const bars = Math.round(width / 10) - 2
+    const gap = width / bars
     const data = getData(bars)
 
-    if (!data.length) return console.warn('Dataset is empty')
+    if (!data.length)
+      return console.warn('Dataset is empty')
 
+    // Update svg dimensions
     svgRef.setAttribute('viewBox', `0 0 ${width} 110`)
     seekbar.resize()
 
     // Update path
-    const gap = width / bars
-    const path = drawCurve(
-      [[0, 100], ...data.map((y, x) => [x * gap, 100 - (y * 100)] as any), [width, 100]]
-    )
-
+    const peaks = [[0, 100], ...data.map((y, x) => [(x + 1) * gap, 100 - (y * 100)] as any), [width, 100]]
+    const path = drawCurve(peaks)
     pathNodes.forEach(i => i.setAttribute('d', path))
   })
 
-  update()
+  requestAnimationFrame(update)
   window.addEventListener('resize', update)
 }
 
